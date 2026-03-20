@@ -1,5 +1,6 @@
 import React from 'react';
 import { Todo } from '../../types/Todo';
+import { clsx } from 'clsx';
 
 interface Props {
   todos: Todo[];
@@ -29,7 +30,14 @@ export const TodoList: React.FC<Props> = ({
 
       <tbody>
         {todos.map(todo => (
-          <tr key={todo.id} data-cy="todo" className="">
+          <tr
+            key={todo.id}
+            data-cy="todo"
+            className={clsx({
+              'has-background-info-light':
+                selectedTodo && selectedTodo.id === todo.id,
+            })}
+          >
             <td className="is-vcentered">{todo.id}</td>
             <td className="is-vcentered">
               {todo.completed && (
@@ -56,7 +64,10 @@ export const TodoList: React.FC<Props> = ({
               >
                 <span className="icon">
                   <i
-                    className={`far ${selectedTodo && selectedTodo.id === todo.id ? 'fa-eye-slash' : 'fa-eye'}`}
+                    className={clsx(
+                      'far',
+                      selectedTodo?.id === todo.id ? 'fa-eye-slash' : 'fa-eye',
+                    )}
                   />
                 </span>
               </button>
